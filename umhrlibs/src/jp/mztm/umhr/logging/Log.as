@@ -1,4 +1,4 @@
-package jp.mztm.log 
+package jp.mztm.umhr.logging 
 {
 	import flash.display.Sprite;
 	import flash.events.Event;

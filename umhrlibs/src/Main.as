@@ -2,7 +2,7 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import jp.mztm.log.Log;
+	import jp.mztm.umhr.logging.Log;
 	
 	/**
 	 * ...

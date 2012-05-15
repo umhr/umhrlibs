@@ -1,4 +1,4 @@
-package jp.mztm.create 
+package jp.mztm.umhr.create 
 {
 	import flash.display.Shape;
 	import flash.display.Sprite;
