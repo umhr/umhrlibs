@@ -84,7 +84,11 @@ package jp.mztm.umhr.logging
 			_date = null;
 		}
 		
-		
+		static public function clear():void {
+			if (_textField) {
+				_textField.text = "";
+			}
+		}
 		
 		static public function dump(obj:Object, useLineFeed:Boolean = false):String {
 			var str:String = returnDump(obj)
