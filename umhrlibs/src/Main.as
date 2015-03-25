@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import jp.mztm.umhr.create.Color;
 	import jp.mztm.umhr.logging.Log;
 	
 	/**
@@ -24,6 +25,7 @@ package
 			
 			addChild(new Log());
 			Log.trace("hoge");
+			Log.trace(Color.TOMATO);
 		}
 		
 	}
