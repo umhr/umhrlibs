@@ -5,7 +5,6 @@ package jp.mztm.umhr.net
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.filesystem.File;
-	import flash.net.FileReference;
 	import flash.system.LoaderContext;
 	
 	/**
