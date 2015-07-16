@@ -4,7 +4,6 @@ package jp.mztm.umhr.net
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
-	import flash.filesystem.File;
 	import flash.net.FileReference;
 	import flash.system.LoaderContext;
 	
@@ -12,30 +11,28 @@ package jp.mztm.umhr.net
 	 * ...
 	 * @author umhr
 	 */
-	public class FetchFile extends EventDispatcher 
+	public class FetchFileReference extends EventDispatcher 
 	{
 		public var content:Object;
 		public var type:String;
-		private var _file:File;
-		public var nativePath:String;
-		public function FetchFile(target:flash.events.IEventDispatcher=null) 
+		private var _fileReference:FileReference;
+		public function FetchFileReference(target:flash.events.IEventDispatcher=null) 
 		{
 			super(target);
 		}
 		public function browse(typeFilter:Array = null):void{
-			_file = new File();
-			_file.addEventListener(Event.SELECT, atSelect);
-			_file.browse(typeFilter);
+			_fileReference = new FileReference();
+			_fileReference.addEventListener(Event.SELECT, atSelect);
+			_fileReference.browse(typeFilter);
 		}
 		private function atSelect(event:Event):void {
-			_file.removeEventListener(Event.SELECT, atSelect);
-			_file.addEventListener(Event.COMPLETE, atFileComplete);
-			nativePath = _file.nativePath;
-			_file.load();
+			_fileReference.removeEventListener(Event.SELECT, atSelect);
+			_fileReference.addEventListener(Event.COMPLETE, atFileComplete);
+			_fileReference.load();
 		}
 		private function atFileComplete(event:Event):void {
-			_file.removeEventListener(Event.COMPLETE, atFileComplete);
-			type = _file.type;
+			_fileReference.removeEventListener(Event.COMPLETE, atFileComplete);
+			type = _fileReference.type;
 			if (isByteArray(type)) {
 				loaderStart();
 			}else {
@@ -58,13 +55,13 @@ package jp.mztm.umhr.net
 		}
 		
 		private function urlLoaderStart():void {
-			content = _file.data;
+			content = _fileReference.data;
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		private function loaderStart():void {
 			var loader:Loader = new Loader();
-			loader.loadBytes(_file.data, new LoaderContext());
+			loader.loadBytes(_fileReference.data, new LoaderContext());
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, atBytesComplete);
 		}
 		
