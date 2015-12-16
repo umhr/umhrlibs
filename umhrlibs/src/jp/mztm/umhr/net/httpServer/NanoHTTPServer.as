@@ -46,7 +46,8 @@ package jp.mztm.umhr.net.httpServer
 			
 			dispatchEvent(new Event(ServerSocketConnectEvent.CONNECT));
             //Log.clear();
-			//Log.trace( "Connection from " + socket.remoteAddress + ":" + socket.remotePort);
+			
+			trace( "Connection from " + socket.remoteAddress + ":" + socket.remotePort);
         }
 		
 		private function onError(e:Event):void 
@@ -60,8 +61,17 @@ package jp.mztm.umhr.net.httpServer
 			{
 				var bytes:ByteArray = new ByteArray();
 				var socket:Socket = event.target as Socket;
+				/*
+				var str:String = socket.readMultiByte(socket.bytesAvailable, "us-ascii");
+				trace("==============================");
+				trace(str);
+				trace("==============================");
+				*/
+				trace("==============================100");
 				socket.readBytes(bytes);
+				trace("==============================200");
 				requestData = new RequestData(bytes);
+				trace("==============================300");
 				
 				if (requestData) {
 					var byteArray:ByteArray = onRequest(requestData);
@@ -78,9 +88,15 @@ package jp.mztm.umhr.net.httpServer
 			}
 			catch (error:Error)
 			{
+				trace(error.errorID, error.message);
 				//Alert.show(error.message, "Error");
 			}
 		}
+		/**
+		 * requestDataで指定されたファイルを取得し、ByteArrayで返します。
+		 * @param	requestData
+		 * @return
+		 */
 		private function getFile(requestData:RequestData):ByteArray {
 			var filePath:String = File.applicationDirectory.nativePath + basePath + requestData.path;
 			var file:File = File.applicationStorageDirectory.resolvePath(filePath);

@@ -16,17 +16,20 @@ package jp.mztm.umhr.net.httpServer
 		public var basicID:String;
 		public var basicPW:String;
 		public var queryList:Object;
+		public var rawString:String;
 		public function RequestData(value:ByteArray) 
 		{
-			if(value){
-				parse(value.toString());
+			if (value) {
+				rawString = value.toString();
+				parse(rawString);
 			}
 		}
 		
 		private function parse(value:String):void 
 		{
+			//trace(value);
 			//Log.clear();
-			Log.trace(value.replace(/\r/g, ""));
+			//Log.trace(value.replace(/\r/g, ""));
 			//Log.trace("//////////////////////////");
 			
 			var list:Array/*String*/ = value.split("\r\n");
@@ -126,6 +129,8 @@ package jp.mztm.umhr.net.httpServer
 		
 		private function setQuery(value:String):void 
 		{
+			//trace("value", value);
+			
 			var postion:int = value.search(/\?/);
 			if (postion == -1) {
 				setPath(value);
@@ -174,6 +179,8 @@ package jp.mztm.umhr.net.httpServer
 			result += "path:" + path;
 			result += ", extention:" + extention;
 			result += ", host:" + host;
+			result += ", basicID:" + basicID;
+			result += ", basicPW:" + basicPW;
 			result += ", queryList:{";
 			var str:String = "";
 			for (var p:String in queryList) { 
