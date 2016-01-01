@@ -12,6 +12,7 @@ package jp.mztm.umhr.net.httpServer
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
 	/**
+	 * RequestDataでBase64を使うので、as3crypto.swcをライブラリに追加すること。
 	 * 参考
 	 * http://help.adobe.com/ja_JP/FlashPlatform/reference/actionscript/3/flash/net/ServerSocket.html#includeExamplesSummary
 	 * ...
@@ -21,8 +22,17 @@ package jp.mztm.umhr.net.httpServer
     {
 		public var basePath:String = "/html";
         private var serverSocket:ServerSocket = new ServerSocket();
+		/**
+		 * function onRequest(requestData:RequestData):ByteArray{ return null };
+		 * 返り値がnullだとファイルを探して返します。ファイル以外を返したい場合はここでnull以外を返します。
+		 * 
+		 */
 		public var onRequest:Function = function(requestData:RequestData):ByteArray { return null };
+		public var onMessage:Function = function(errorID:String, message:String):void { return };
 		private var requestData:RequestData;
+		/**
+		 * RequestDataでBase64を使うので、as3crypto.swcをライブラリに追加すること。
+		 */
         public function NanoHTTPServer()
         {
         }
@@ -33,6 +43,8 @@ package jp.mztm.umhr.net.httpServer
             serverSocket.bind( port, ip );
             serverSocket.addEventListener( ServerSocketConnectEvent.CONNECT, onConnect );
             serverSocket.listen();
+			
+			onMessage("Bind to http://" + ip + ":" + port);
         }
 		public function get boundTo():String {
 			return serverSocket.localAddress + ":" + serverSocket.localPort;
@@ -47,12 +59,12 @@ package jp.mztm.umhr.net.httpServer
 			dispatchEvent(new Event(ServerSocketConnectEvent.CONNECT));
             //Log.clear();
 			
-			trace( "Connection from " + socket.remoteAddress + ":" + socket.remotePort);
+			onMessage( "Connection from " + socket.remoteAddress + ":" + socket.remotePort);
         }
 		
 		private function onError(e:Event):void 
 		{
-			trace(e.type);
+			onMessage(e.type);
 		}
         
         private function onClientSocketData( event:ProgressEvent ):void
@@ -63,15 +75,9 @@ package jp.mztm.umhr.net.httpServer
 				var socket:Socket = event.target as Socket;
 				/*
 				var str:String = socket.readMultiByte(socket.bytesAvailable, "us-ascii");
-				trace("==============================");
-				trace(str);
-				trace("==============================");
 				*/
-				trace("==============================100");
 				socket.readBytes(bytes);
-				trace("==============================200");
 				requestData = new RequestData(bytes);
-				trace("==============================300");
 				
 				if (requestData) {
 					var byteArray:ByteArray = onRequest(requestData);
@@ -88,8 +94,7 @@ package jp.mztm.umhr.net.httpServer
 			}
 			catch (error:Error)
 			{
-				trace(error.errorID, error.message);
-				//Alert.show(error.message, "Error");
+				onMessage(error.errorID + " " + error.message);
 			}
 		}
 		/**

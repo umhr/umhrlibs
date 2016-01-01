@@ -170,7 +170,20 @@ package jp.mztm.umhr.net.httpServer
 		
 		public function clone():RequestData {
 			var result:RequestData = new RequestData(null);
-			
+			result.path = path;
+			result.extention = extention;
+			result.host = host;
+			result.basicID = basicID;
+			result.basicPW = basicPW;
+			var p:String;
+			for (p in postList) { 
+				result.postList[p] = postList[p];
+			}
+			for (p in queryList) { 
+				result.queryList[p] = queryList[p];
+			}
+			result.postList
+			result.rawString = rawString;
 			return result;
 		}
 		
@@ -181,9 +194,19 @@ package jp.mztm.umhr.net.httpServer
 			result += ", host:" + host;
 			result += ", basicID:" + basicID;
 			result += ", basicPW:" + basicPW;
-			result += ", queryList:{";
+			result += ", postList:{";
 			var str:String = "";
-			for (var p:String in queryList) { 
+			var p:String;
+			for (p in postList) { 
+				if (str.length > 0) {
+					str += " ,";
+				}
+				str += p + ":" + postList[p];
+			}
+			result += str + "}";
+			result += ", queryList:{";
+			str = "";
+			for (p in queryList) { 
 				if (str.length > 0) {
 					str += " ,";
 				}

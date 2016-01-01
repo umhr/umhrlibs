@@ -26,7 +26,7 @@ package jp.mztm.umhr.net
 			}
 			catch ( e:Error )
 			{
-				trace( e );
+				trace( e.message );
 			}
 		}
 		

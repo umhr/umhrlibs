@@ -8,10 +8,10 @@ package jp.mztm.umhr.net.httpServer
 	 */
 	public class ResponceData 
 	{
-		//private var _body:String;
 		private var _location:String;
 		private var _status:int;
 		private var _byteArray:ByteArray = new ByteArray();
+		public var serverName:String = "NanoHTTPServer";
 		public function ResponceData(status:int = 200) 
 		{
 			_status = status;
@@ -23,11 +23,6 @@ package jp.mztm.umhr.net.httpServer
 			return this;
 		}
 		
-		
-		//public function setBody(body:String):ResponceData {
-			//_body = body;
-			//return this;
-		//}
 		public function setByteArray(byteArray:ByteArray):ResponceData {
 			_byteArray = byteArray;
 			return this;
@@ -37,7 +32,7 @@ package jp.mztm.umhr.net.httpServer
 			return this;
 		}
 		
-		public function toByteArray(extention:String = ".html"):ByteArray {
+		public function toByteArray(extention:String = ".html", fileName:String = null):ByteArray {
 			var text:String = "HTTP/1.1 200 OK\r\n";
 			if (_status == 301) {
 				text = "HTTP/1.0 301 Moved Permanently\r\n";
@@ -54,11 +49,14 @@ package jp.mztm.umhr.net.httpServer
 			
 			var dateStr:String = dateFormat(new Date());
 			text += "Date: " + dateStr + " GMT\r\n";
-			text += "Server: Mztm\r\n";
+			text += "Server: " + serverName+"\r\n";
 			text += "Accept-Ranges: bytes\r\n";
 			text += "Access-Control-Allow-Origin: *\r\n";// jsからjsonを読めるように。
 			text += "Content-Length: " + _byteArray.length + "\r\n";
 			text += "Content-Type: " + contentTypeFromExtention(extention) + "\r\n";
+			if (fileName) {
+				text += 'Content-Disposition: inline; filename="' + fileName + '"\r\n';
+			}
 			text += "Cache-Control: no-cache\r\n";
 			if (_status == 301) {
 				text += "Location: " + _location + "\r\n";
@@ -128,12 +126,14 @@ package jp.mztm.umhr.net.httpServer
 		
 		public function clone():ResponceData {
 			var result:ResponceData = new ResponceData(_status);
-			
+			result._byteArray = _byteArray;
+			result._location = _location;
+			result.serverName = serverName;
 			return result;
 		}
 		public function toString():String {
 			var result:String = "ResponceData:{";
-			
+			result += "serverName:" + serverName;
 			result += "}";
 			return result;
 		}
