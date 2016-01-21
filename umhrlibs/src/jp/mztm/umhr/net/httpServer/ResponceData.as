@@ -104,7 +104,8 @@ package jp.mztm.umhr.net.httpServer
 				["text/csv", ".csv"],
 				["text/html", ".html", ".htm", ".cgi"],
 				["text/javascript", ".js"],
-				["text/plain", ".txt", ".xml"]
+				["text/plain; charset=utf-8", ".txt", ".text", ".conf", ".list", ".as", ".log"],
+				["text/xml", ".xml"]
 				];
 			var ex:String;
 			var n:int = list.length;
