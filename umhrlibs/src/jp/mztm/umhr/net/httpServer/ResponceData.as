@@ -105,7 +105,8 @@ package jp.mztm.umhr.net.httpServer
 				["text/html", ".html", ".htm", ".cgi"],
 				["text/javascript", ".js"],
 				["text/plain; charset=utf-8", ".txt", ".text", ".conf", ".list", ".as", ".log"],
-				["text/xml", ".xml"]
+				["text/xml", ".xml"],
+				["text/richtext", ".rtx"]
 				];
 			var ex:String;
 			var n:int = list.length;
