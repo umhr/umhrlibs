@@ -152,8 +152,8 @@ package jp.mztm.umhr.net.httpServer
 					queryList = { };
 				}
 				var key:String = queryStrList[i].substr(0, pos);
-				var value:String = queryStrList[i].substr(pos + 1);
-				queryList[key] = value;
+				var str:String = queryStrList[i].substr(pos + 1);
+				queryList[key] = str;
 			}
 			
 			//Log.dump(queryList);
