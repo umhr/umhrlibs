@@ -11,6 +11,7 @@ package jp.mztm.umhr.net.httpServer
 	import flash.net.ServerSocket;
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
+	[Event(name="connect",type="flash.events.ServerSocketConnectEvent")]
 	/**
 	 * RequestDataでBase64を使うので、as3crypto.swcをライブラリに追加すること。
 	 * 参考

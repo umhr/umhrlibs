@@ -7,6 +7,7 @@ package jp.mztm.umhr.net
 	import flash.net.InterfaceAddress;
 	import flash.net.NetworkInfo;
 	import flash.net.NetworkInterface;
+	[Event(name="complete",type="flash.events.Event")]
 	/**
 	 * ...
 	 * @author umhr

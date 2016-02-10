@@ -6,7 +6,7 @@ package jp.mztm.umhr.net
 	import flash.events.IEventDispatcher;
 	import flash.net.FileReference;
 	import flash.system.LoaderContext;
-	
+	[Event(name="complete",type="flash.events.Event")]
 	/**
 	 * ...
 	 * @author umhr
