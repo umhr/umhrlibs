@@ -11,6 +11,7 @@ package jp.mztm.umhr.net.httpServer
 	import flash.net.ServerSocket;
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
+	
 	[Event(name="connect",type="flash.events.ServerSocketConnectEvent")]
 	/**
 	 * RequestDataでBase64を使うので、as3crypto.swcをライブラリに追加すること。
@@ -68,6 +69,22 @@ package jp.mztm.umhr.net.httpServer
 			onMessage(e.type);
 		}
         
+		public function dispose():void {
+			//trace("NanoHTTPServer.dispose");
+			if(serverSocket){
+				serverSocket.close();
+				serverSocket.removeEventListener(ServerSocketConnectEvent.CONNECT, onConnect);
+				serverSocket = null;
+			}
+			onRequest = null;
+			onMessage = null;
+			requestData = null;
+		}
+        
+		public function close():void {
+			serverSocket.close();
+		}
+		
         private function onClientSocketData( event:ProgressEvent ):void
         {
 			try
@@ -121,6 +138,7 @@ package jp.mztm.umhr.net.httpServer
 			}
 			
 		};
+		
 		
     }
 }
