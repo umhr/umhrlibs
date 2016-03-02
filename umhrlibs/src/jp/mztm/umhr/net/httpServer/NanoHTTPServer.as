@@ -30,7 +30,7 @@ package jp.mztm.umhr.net.httpServer
 		 * 
 		 */
 		public var onRequest:Function = function(requestData:RequestData):ByteArray { return null };
-		public var onMessage:Function = function(errorID:String, message:String):void { return };
+		public var onMessage:Function = function(message:String):void { return };
 		private var requestData:RequestData;
 		/**
 		 * RequestDataでBase64を使うので、as3crypto.swcをライブラリに追加すること。
