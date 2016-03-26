@@ -12,6 +12,9 @@ package jp.mztm.umhr.create
 	 * getVariation(色数、開始色=0xFFFFFFFF、hue方向？明るさ方向？彩度方向？知覚的？)
 	 * HUE固定のgetHUEVariationでいいんじゃない？開始色はコンストラクタで渡してという処理が良い？だからstaticでは無い？
 	 * getHUEVariation(色数、is知覚的=true):Array
+	 * 
+	 * ColorはあくまでもC#のクローンにして、RGB,ARGBクラスを作る？
+	 * 
 	 * ...
 	 * @author umhr
 	 */
