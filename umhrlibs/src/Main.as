@@ -26,6 +26,10 @@ package
 			addChild(new Log());
 			Log.trace("hoge");
 			Log.trace(Color.TOMATO);
+			Log.trace(Color.TOMATO.toString(16));
+			//Log.trace(Color.argbFromRGB(Color.TOMATO, 0x33).toString(16));
+			//Log.trace(Color.rgbFromARGB(Color.argbFromRGB(Color.TOMATO, 0x33)).toString(16));
+			
 		}
 		
 	}
