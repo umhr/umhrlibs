@@ -1,4 +1,4 @@
-package jp.mztm.net 
+package jp.mztm.umhr.net 
 {
 	import flash.net.SharedObject;
 	/**

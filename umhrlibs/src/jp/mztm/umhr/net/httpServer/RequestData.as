@@ -71,6 +71,13 @@ package jp.mztm.umhr.net.httpServer
 				}
 			}
 		}
+		public function hasQuery(query:String):Boolean {
+			if (queryList == null) {
+				return false;
+			}else {
+				return queryList[query] != null;
+			}
+		}
 		private function setPosted(boundary:String, messageBody:String):void {
 			var dataList:Array = messageBody.split("--" + boundary);
 			var n:int = dataList.length - 1;
