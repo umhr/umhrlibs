@@ -2,7 +2,9 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import jp.mztm.umhr.create.ARGB;
 	import jp.mztm.umhr.create.ColorUtils;
+	import jp.mztm.umhr.cs.system.drawing.Color;
 	import jp.mztm.umhr.logging.Log;
 	
 	/**
@@ -25,8 +27,9 @@ package
 			
 			addChild(new Log());
 			Log.trace("hoge");
-			Log.trace(ColorUtils.TOMATO);
-			Log.trace(ColorUtils.TOMATO.toString(16));
+			Log.trace(new ARGB().toString() );
+			//Log.trace(new ARGB(Color.TOMATO).toString() );
+			Log.trace(Color.TOMATO.toString(16));
 			//Log.trace(Color.argbFromRGB(Color.TOMATO, 0x33).toString(16));
 			//Log.trace(Color.rgbFromARGB(Color.argbFromRGB(Color.TOMATO, 0x33)).toString(16));
 			
