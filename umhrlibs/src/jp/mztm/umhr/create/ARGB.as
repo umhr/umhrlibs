@@ -26,30 +26,38 @@ package jp.mztm.umhr.create
 			return argb & 0xFFFFFF;
 		}
 		
-		public function ARGB(argb:uint = NaN, a:int = -1, r:int = -1, g:int = -1, b:int = -1) 
+		public function ARGB(argb:uint = 0, a:int = -1, r:int = -1, g:int = -1, b:int = -1) 
 		{
+			//trace(argb, isNaN(argb));
+			var isChange:Boolean;
+			if (argb > 0) {
+				_a = argb >> 24 & 0xff;//24bit右にずらす。
+				_r = argb >> 16 & 0xff;//16bit右にずらして、下位8bitのみを取り出す。
+				_g = argb >> 8 & 0xff;//8bit右にずらして、下位8bitのみを取り出す。
+				_b = argb & 0xff;//下位8bitのみを取り出す。
+				isChange = true;
+			}
 			if(a > -1){
 				_a = a & 0xff;
-			}else if (!isNaN(argb)) {
-				_a = argb >> 24 & 0xff;//24bit右にずらす。
+				isChange = true;
 			}
 			if(r > -1){
 				_r = r & 0xff;
-			}else if(!isNaN(argb)){
-				_r = argb >> 16 & 0xff;//16bit右にずらして、下位8bitのみを取り出す。
+				isChange = true;
 			}
 			if(g > -1){
 				_g = g & 0xff;
-			}else if(!isNaN(argb)){
-				_g = argb >> 8 & 0xff;//8bit右にずらして、下位8bitのみを取り出す。
+				isChange = true;
 			}
 			if(b > -1){
 				_b = b & 0xff;
-			}else if(!isNaN(argb)){
-				_b = argb & 0xff;//下位8bitのみを取り出す。
+				isChange = true;
 			}
-			_isChanged = true;
-			_isHSBChanged = true;
+			
+			if(isChange){
+				_isChanged = true;
+				_isHSBChanged = true;
+			}
 		}
 		
 		/**

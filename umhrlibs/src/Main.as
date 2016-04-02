@@ -26,7 +26,7 @@ package
 			// entry point
 			
 			addChild(new Log());
-			Log.trace("hoge");
+			Log.trace("hoge",0xFFFFFFFF);
 			Log.trace(new ARGB().toString() );
 			//Log.trace(new ARGB(Color.TOMATO).toString() );
 			Log.trace(Color.TOMATO.toString(16));
