@@ -11,12 +11,21 @@ package jp.mztm.umhr.create
 		private var _r:int = 0;
 		private var _g:int = 0;
 		private var _b:int = 0;
-		private var _isChanged:Boolean;
+		private var _isRGBChanged:Boolean;
 		private var _isHSBChanged:Boolean;
 		private var _argb:uint = 0;
 		private var _rgb:int = 0;
+		/**
+		 * 0-360
+		 */
 		private var _hue:Number;
+		/**
+		 * 0-1.0
+		 */
 		private var _saturation:Number;
+		/**
+		 * 0-1.0
+		 */
 		private var _brightness:Number;
 		
 		static public function argbFromRGB(rgb:int, a:int = 0xFF):uint {
@@ -55,7 +64,7 @@ package jp.mztm.umhr.create
 			}
 			
 			if(isChange){
-				_isChanged = true;
+				_isRGBChanged = true;
 				_isHSBChanged = true;
 			}
 		}
@@ -91,34 +100,35 @@ package jp.mztm.umhr.create
 		
 		private function calcRGBByHSB():void {
 			var max:Number = _brightness;
-			var min:Number = max - (_saturation / 255) * max;
+			var min:Number = max - (_saturation / 1) * max;
+			//var min:Number = max - (_saturation / 255) * max;
 			
 			if (_hue <= 60) {
-				_r = max;
-				_g = (_hue / 60) * (max - min) + min;
-				_b = min;
+				_r = (max)*255;
+				_g = ((_hue / 60) * (max - min) + min)*255;
+				_b = (min)*255;
 			}else if (_hue <= 120) {
-				_r = ((120 - _hue) / 60) * (max - min) + min;
-				_g = max;
-				_b = min;
+				_r = (((120 - _hue) / 60) * (max - min) + min)*255;
+				_g = (max)*255;
+				_b = (min)*255;
 			}else if (_hue <= 180) {
-				_r = min;
-				_g = max;
-				_b = ((_hue-120) / 60) * (max - min) + min;
+				_r = (min)*255;
+				_g = (max)*255;
+				_b = (((_hue-120) / 60) * (max - min) + min)*255;
 			}else if (_hue <= 240) {
-				_r = min;
-				_g = ((240 - _hue) / 60) * (max - min) + min;
-				_b = max;
+				_r = (min)*255;
+				_g = (((240 - _hue) / 60) * (max - min) + min)*255;
+				_b = (max)*255;
 			}else if (_hue <= 300) {
-				_r = ((_hue-240) / 60) * (max - min) + min;
-				_g = min;
-				_b = max;
+				_r = (((_hue-240) / 60) * (max - min) + min)*255;
+				_g = (min)*255;
+				_b = (max)*255;
 			}else {
-				_r = max;
-				_g = min;
-				_b = ((360 - _hue) / 60) * (max - min) + min;
+				_r = (max)*255;
+				_g = (min)*255;
+				_b = (((360 - _hue) / 60) * (max - min) + min)*255;
 			}
-			_isChanged = true;
+			_isRGBChanged = true;
 		}
 		
 		public function get colorTransform():ColorTransform {	
@@ -135,7 +145,7 @@ package jp.mztm.umhr.create
 				_g = (255 - _g) * (ratio - 1) + _g;
 				_b = (255 - _b) * (ratio - 1) + _b;
 			}
-			_isChanged = true;
+			_isRGBChanged = true;
 			_isHSBChanged = true;
 			return this;
 		}
@@ -153,7 +163,7 @@ package jp.mztm.umhr.create
 		{
 			if (_a == value) { return };
 			_a = value;
-			_isChanged = true;
+			_isRGBChanged = true;
 			_isHSBChanged = true;
 			
 		}
@@ -167,7 +177,7 @@ package jp.mztm.umhr.create
 		{
 			if (_r == value) { return };
 			_r = value;
-			_isChanged = true;
+			_isRGBChanged = true;
 			_isHSBChanged = true;
 		}
 		
@@ -180,7 +190,7 @@ package jp.mztm.umhr.create
 		{
 			if (_g == value) { return };
 			_g = value;
-			_isChanged = true;
+			_isRGBChanged = true;
 			_isHSBChanged = true;
 		}
 		
@@ -193,16 +203,16 @@ package jp.mztm.umhr.create
 		{
 			if (_b == value) { return };
 			_b = value;
-			_isChanged = true;
+			_isRGBChanged = true;
 			_isHSBChanged = true;
 		}
 		
 		public function get argb():uint 
 		{
-			if (_isChanged) {
+			if (_isRGBChanged) {
 				_argb = _a << 24 | _r << 16 | _g << 8 | _b;
 				_rgb = _argb & 0xFFFFFF;
-				_isChanged = false;
+				_isRGBChanged = false;
 			}
 			return _argb;
 		}
@@ -220,7 +230,7 @@ package jp.mztm.umhr.create
 		
 		public function get rgb():int 
 		{
-			if (_isChanged) {
+			if (_isRGBChanged) {
 				argb;
 			}
 			return _rgb;
@@ -232,7 +242,7 @@ package jp.mztm.umhr.create
 			_r = value >> 16 & 0xFF;//16bit右にずらして、下位8bitのみを取り出す。
 			_g = value >> 8 & 0xFF;//8bit右にずらして、下位8bitのみを取り出す。
 			_b = value & 0xFF;//下位8bitのみを取り出す。
-			_isChanged = true;
+			_isRGBChanged = true;
 			_isHSBChanged = true;
 		}
 		
