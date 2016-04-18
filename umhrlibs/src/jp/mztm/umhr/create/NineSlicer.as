@@ -63,7 +63,7 @@ package jp.mztm.umhr.create
 			shape.graphics.beginBitmapFill(tempBitmapData, null, true);
 			shape.graphics.drawRect(0, 0, t1x, t2y - t1y);
 			shape.graphics.endFill();
-			result.draw(shape, new Matrix(1, 0, 0, 1, 0, t1x));
+			result.draw(shape, new Matrix(1, 0, 0, 1, 0, t1y));
 			
 			
 			tempBitmapData = new BitmapData(rectangle.width, rectangle.height, true, 0x00000000);
