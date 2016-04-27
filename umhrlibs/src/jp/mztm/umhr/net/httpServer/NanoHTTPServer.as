@@ -22,7 +22,7 @@ package jp.mztm.umhr.net.httpServer
 	 */
     public class NanoHTTPServer extends EventDispatcher
     {
-		public var basePath:String = "/html";
+		public var basePath:String = File.applicationDirectory.nativePath + "/html";
         private var serverSocket:ServerSocket = new ServerSocket();
 		/**
 		 * function onRequest(requestData:RequestData):ByteArray{ return null };
@@ -121,7 +121,7 @@ package jp.mztm.umhr.net.httpServer
 		 * @return
 		 */
 		private function getFile(requestData:RequestData):ByteArray {
-			var filePath:String = File.applicationDirectory.nativePath + basePath + requestData.path;
+			var filePath:String = basePath + requestData.path;
 			var file:File = File.applicationStorageDirectory.resolvePath(filePath);
 			if (file.isDirectory) {
 				var location:String = "http://" + requestData.host + requestData.path + "/";
