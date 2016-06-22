@@ -45,6 +45,7 @@ package jp.mztm.umhr.logging
 			_textField.width = _width;
 			_textField.height = _height;
 			_textField.mouseEnabled = false;
+			_textField.wordWrap = _textField.multiline = true;
 			return _textField;
 		}
 		
@@ -57,7 +58,10 @@ package jp.mztm.umhr.logging
 			var msg:String = _tracer.show(arguments);
 			
 			if (_textField) {
-				_textField.appendText(msg + "\n");
+				var text:String = _textField.text;
+				text = text.substr(0, 10000);
+				_textField.text = msg +"\n" + text;
+				//_textField.appendText(msg + "\n");
 			}
 		}
 		
